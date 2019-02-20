@@ -27,5 +27,8 @@
     "set-cookie-parser": "^2.3.5",
     "cookie-parser": "latest",
     "body-parser": "latest"
+  },
+  "engines": {
+    "node": "10.x"
   }
 }

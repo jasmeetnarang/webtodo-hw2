@@ -29,7 +29,6 @@ app.post('/register',function(req,res){
 
 })
 
-
 //Login and authorize a username
 app.post('/login',function(req,res){
     //authorize the user
@@ -50,10 +49,9 @@ app.post('/login',function(req,res){
     });
 });
 
-
 app.get('/datajson',function(req,res){
     res.send(data);
-})
+});
 
 //create a new item
 app.post('/addtodoitem',function(req,res){
@@ -71,7 +69,7 @@ app.post('/addtodoitem',function(req,res){
         }
         res.redirect("/todolist")
     });
-})
+});
 
 //see all items
 app.get('/listtodoitem',function(req,res) {
@@ -90,7 +88,7 @@ app.get('/listtodoitem',function(req,res) {
         res.send(body);
 
     });
-})
+});
 
 app.post('/removetodoitem',function(req,res){
 //delete an item
@@ -106,11 +104,9 @@ app.post('/removetodoitem',function(req,res){
         if (error) {
             console.dir(error);
         }
+        res.redirect("/todolist")
     });
-    res.redirect("/todolist")
-    //console.log(req.body);
-    console.log("this is removing item function")
-})
+});
 
 app.post('/changetodoitem',function(req,res){
 //Update some data on an item
@@ -127,11 +123,9 @@ app.post('/changetodoitem',function(req,res){
         if (error) {
             console.dir(error);
         }
+        res.redirect("/todolist")
     });
-    res.redirect("/todolist")
-    //console.log(body)
-    console.log("this is updating item function")
-})
+});
 
 app.get('/todolist',function(req,res){
     //console.log(req.cookies.jazzAuth);

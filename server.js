@@ -4,12 +4,10 @@ const path = require('path')
 const bodyParser = require('body-parser')
 const cookieParser = require('cookie-parser')
 const data = require("./data.json");
-const axios = require('axios');
 const Request = require("request");
 const setCookie = require('set-cookie-parser');
-const list = [];
 
-app.use(cookieParser())
+app.use(cookieParser());
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 

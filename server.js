@@ -13,13 +13,6 @@ app.use(cookieParser())
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 
-//
-// function authCheck(req,res,next){
-//     if(req.cookie && req.cookie.jazzAuth){
-//         return next();
-//     }
-//     return res.redirect("/");
-// }
 
 //register a username
 app.post('/register',function(req,res){
@@ -130,7 +123,7 @@ app.post('/changetodoitem',function(req,res){
         "headers": {"Cookie": [rCookie]},
         "url": "https://hunter-todo-api.herokuapp.com/todo-item/"+req.body.updateitem,
         "body": JSON.stringify({
-            "completed": "true"
+            "completed": true
         })
     }, (error, response, body) => {
         if (error) {
@@ -138,6 +131,7 @@ app.post('/changetodoitem',function(req,res){
         }
     });
     res.redirect("/todolist")
+    //console.log(body)
     console.log("this is updating item function")
 })
 

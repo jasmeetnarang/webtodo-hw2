@@ -27,7 +27,7 @@ Request.post({
         const cookie = cookies.sillyauth.value;
         const rCookie = Request.cookie(`sillyauth=${cookie}`);
 
-        console.log(rCookie);
+        console.log("rcookie is ",rCookie);
         Request.get({
             "headers": {"Cookie": [rCookie]},
             "url": "https://hunter-todo-api.herokuapp.com/todo-item"
@@ -53,7 +53,7 @@ Request.post({
                     if (error) {
                         return console.dir(error);
                     }
-                    console.log(JSON.parse(body));
+                    //console.log(JSON.parse(body));
                 });
             });
         });

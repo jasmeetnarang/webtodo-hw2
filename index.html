@@ -40,7 +40,7 @@
 	<script>
 		$(document).ready(function(){
 			console.log("inside document")
-			$.getJSON("/listtodoitem", function (data) {
+			$.getJSON("/datajson", function (data) {
 				console.log("getting json file");
 				$.each(data, function (index, item) {
 					$("#demo").append(item.completed === true ? "<li><del>" + item.name + "</del></li>" : "<li>" + item.name + "</li>");
@@ -53,15 +53,10 @@
 	<br/>
 
 </div>
+
 <div>
-	<form action="/addtodoitem" method="post">
-		<label for="todo-item"></label>
-		<input type="text" id="add" name="additem" placeholder="ITEM NAME" />
-		<input type="submit" value="add">
-	</form>
-	<form action="/removetodoitem" method="post">
-		<input type="text" id="remove" name="add" placeholder="ITEM TO REMOVE" />
-		<input type="submit" value="add">
+	<form action="/todolist">
+		<input type="submit" value="Make your todo list">
 	</form>
 </div>
 

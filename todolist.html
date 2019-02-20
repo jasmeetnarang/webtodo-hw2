@@ -1,0 +1,50 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.10.1/jquery.min.js"></script>
+    <title>To-do List</title>
+</head>
+<body>
+<div>
+    <h2 align = center>To do List</h2>
+    <ul id = "list"></ul>
+    <script>
+        $(document).ready(function(){
+            console.log("inside document")
+            $.getJSON("/listtodoitem", function (data) {
+                console.log("getting json file");
+                $.each(data, function (index, item) {
+                    var content = item.completed === true ? "<del>" + item.content + "</del>" :item.content;
+                    $("#list").append("<li>" + item.id + " - " + content + "</li>");
+
+                });
+            });
+        });
+
+    </script>
+    <br/>
+
+</div>
+
+<div>
+    <form action="/addtodoitem" method="post">
+        <label for="add"></label>
+        <input type="text" id="add" name="additem" placeholder="ITEM NAME" />
+        <input type="submit" value="add">
+    </form>
+    <form action="/removetodoitem" method="post">
+        <input type="number" id="remove" name="removeitem" placeholder="ITEM ID" />
+        <input type="submit" value="remove">
+    </form>
+    <form action="/changetodoitem" method="post">
+        <input type="number" id="update" name="updateitem" placeholder="ITEM ID" />
+        <input type="submit" value="update">
+    </form>
+
+</div>
+
+</body>
+</html>
+
+

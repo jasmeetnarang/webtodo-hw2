@@ -7,7 +7,7 @@ const data = require("./data.json");
 const axios = require('axios');
 const Request = require("request");
 const setCookie = require('set-cookie-parser');
-
+const list = [];
 
 app.use(cookieParser())
 app.use(bodyParser.json());
@@ -60,28 +60,14 @@ app.post('/login',function(req,res){
 });
 
 
-// app.get('/datajson',function(req,res){
-//     res.send(data);
-// })
-
-app.get('/listtodoitem',function(req,res) {
-    //see all items
-    rCookie = req.cookies.jazzAuth
-    Request.get({
-        "headers": {"Cookie": [rCookie]},
-        "url": "https://hunter-todo-api.herokuapp.com/todo-item",
-
-    }, (error, response, body) => {
-        if (error) {
-            return console.dir(error);
-        }
-        res.send(data);
-        //console.dir(JSON.parse(body));
-    });
+app.get('/datajson',function(req,res){
+    res.send(data);
 })
 
-app.post('/addtodoitem',function(req,res){
 //create a new item
+app.post('/addtodoitem',function(req,res){
+
+    const rCookie = Request.cookie(`sillyauth=${req.cookies.jazzAuth}`);
     Request.post({
         "headers": {"Cookie": [rCookie]},
         "url": "https://hunter-todo-api.herokuapp.com/todo-item",
@@ -90,51 +76,80 @@ app.post('/addtodoitem',function(req,res){
         })
     }, (error, response, body) => {
         if (error) {
-            return console.dir(error);
+            console.dir(error);
         }
+        res.redirect("/todolist")
     });
 })
-app.put('/changetodoitem',function(req,res){
+
+//see all items
+app.get('/listtodoitem',function(req,res) {
+
+    const rCookie = Request.cookie(`sillyauth=${req.cookies.jazzAuth}`);
+    Request.get({
+        "headers": {"Cookie": [rCookie]},
+        "url": "https://hunter-todo-api.herokuapp.com/todo-item",
+
+    }, (error, response, body) => {
+        if (error) {
+            return console.dir(error);
+        }
+
+        console.log("this is listing item function")
+        res.send(body);
+
+    });
+})
+
+app.post('/removetodoitem',function(req,res){
+//delete an item
+
+    const rCookie = Request.cookie(`sillyauth=${req.cookies.jazzAuth}`);
+
+    Request.delete({
+        "headers": {"Cookie": [rCookie]},
+        "url": "https://hunter-todo-api.herokuapp.com/todo-item/"+req.body.removeitem,
+        "body": JSON.stringify({
+        })
+    }, (error, response, body) => {
+        if (error) {
+            console.dir(error);
+        }
+    });
+    res.redirect("/todolist")
+    //console.log(req.body);
+    console.log("this is removing item function")
+})
+
+app.post('/changetodoitem',function(req,res){
 //Update some data on an item
+
+    const rCookie = Request.cookie(`sillyauth=${req.cookies.jazzAuth}`);
+
     Request.put({
         "headers": {"Cookie": [rCookie]},
-        "url": "https://hunter-todo-api.herokuapp.com/todo-item/64",
+        "url": "https://hunter-todo-api.herokuapp.com/todo-item/"+req.body.updateitem,
         "body": JSON.stringify({
             "completed": "true"
         })
     }, (error, response, body) => {
         if (error) {
-            return console.dir(error);
+            console.dir(error);
         }
     });
+    res.redirect("/todolist")
+    console.log("this is updating item function")
 })
 
-app.delete('/removetodoitem',function(req,res){
-//delete an item
-    Request.delete({
-        "headers": {"Cookie": [rCookie]},
-        "url": "https://hunter-todo-api.herokuapp.com/todo-item/64",
-        "body": JSON.stringify({
-            "id": "64"
-        })
-    }, (error, response, body) => {
-        if (error) {
-            return console.dir(error);
-        }
-    });
-    console.log(req.body);
-})
-
-
-// app.post('/addtolist',function (req,res) {
-//     console.log(req.body);
-// 	res.send('added');
-// })
-
-
+app.get('/todolist',function(req,res){
+    //console.log(req.cookies.jazzAuth);
+    //rCookie = req.cookies.jazzAuth;
+    res.sendFile(path.join(__dirname, 'todolist.html'))
+});
 
 app.get('/hompage',function(req,res){
     console.log(req.cookies.jazzAuth);
+    //rCookie = req.cookies.jazzAuth;
     res.sendFile(path.join(__dirname, 'index.html'))
 });
 

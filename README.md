@@ -1,7 +1,7 @@
 # webdev-todoList
 
-Usage
-$ git clone <this repo>
-$ cd <this repo name>
-$ npm i
-$ node sever.js
+Usage: 
+1. $ git clone <this repo>
+2. $ cd <this repo name>
+3. $ npm i
+4. $ node sever.js

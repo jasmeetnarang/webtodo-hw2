@@ -2,7 +2,8 @@ const express = require ('express');
 const app = express();
 const path = require('path')
 const bodyParser = require('body-parser')
-const cookieParser = require('cookie-parser')
+const cookieParser = require('cookie-parser');
+const morgan = require('morgan');
 const data = require("./data.json");
 const Request = require("request");
 const setCookie = require('set-cookie-parser');
@@ -10,10 +11,17 @@ const setCookie = require('set-cookie-parser');
 app.use(cookieParser());
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
+app.use(morgan('combined'))
+
+app.use(express.static('./client/build'));
+
+app.get("/", function (req,res) {
+    res.sendFile(`${__dirname}/client/build/index.html`)
+});
 
 
 //register a username
-app.post('/register',function(req,res){
+app.post('/api/register',function(req,res){
     //add a user
     Request.post({
         "url": 'https://hunter-todo-api.herokuapp.com/user',
@@ -30,7 +38,7 @@ app.post('/register',function(req,res){
 })
 
 //Login and authorize a username
-app.post('/login',function(req,res){
+app.post('/api/login',function(req,res){
     //authorize the user
     Request.post({
         "url": 'https://hunter-todo-api.herokuapp.com/auth',
@@ -49,12 +57,12 @@ app.post('/login',function(req,res){
     });
 });
 
-app.get('/datajson',function(req,res){
+app.get('/api/datajson',function(req,res){
     res.send(data);
 });
 
 //create a new item
-app.post('/addtodoitem',function(req,res){
+app.post('/api/addtodoitem',function(req,res){
 
     const rCookie = Request.cookie(`sillyauth=${req.cookies.jazzAuth}`);
     Request.post({
@@ -71,8 +79,14 @@ app.post('/addtodoitem',function(req,res){
     });
 });
 
+app.get('/api/logout',function(req,res) {
+    console.log("logging out")
+    res.clearCookie('jazzAuth');
+    res.redirect('/');
+});
+
 //see all items
-app.get('/listtodoitem',function(req,res) {
+app.get('/api/listtodoitem',function(req,res) {
 
     const rCookie = Request.cookie(`sillyauth=${req.cookies.jazzAuth}`);
     Request.get({
@@ -90,7 +104,7 @@ app.get('/listtodoitem',function(req,res) {
     });
 });
 
-app.post('/removetodoitem',function(req,res){
+app.post('/api/removetodoitem',function(req,res){
 //delete an item
 
     const rCookie = Request.cookie(`sillyauth=${req.cookies.jazzAuth}`);
@@ -108,7 +122,7 @@ app.post('/removetodoitem',function(req,res){
     });
 });
 
-app.post('/changetodoitem',function(req,res){
+app.post('/api/changetodoitem',function(req,res){
 //Update some data on an item
 
     const rCookie = Request.cookie(`sillyauth=${req.cookies.jazzAuth}`);
@@ -127,24 +141,33 @@ app.post('/changetodoitem',function(req,res){
     });
 });
 
-app.get('/todolist',function(req,res){
-    //console.log(req.cookies.jazzAuth);
-    //rCookie = req.cookies.jazzAuth;
-    res.sendFile(path.join(__dirname, 'todolist.html'))
-});
+app.get("*", function (req,res) {
+    res.sendFile(`${__dirname}/client/build/index.html`)
+})
 
-app.get('/hompage',function(req,res){
-    console.log(req.cookies.jazzAuth);
-    //rCookie = req.cookies.jazzAuth;
-    res.sendFile(path.join(__dirname, 'index.html'))
-});
+// app.get('*',(req,res)=>{
+//
+//     res.sendFile(path.join(__dirname, `../src/${PATH_DIR}/index.html`));
+// });
 
+// app.get('/todolist',function(req,res){
+//     //console.log(req.cookies.jazzAuth);
+//     //rCookie = req.cookies.jazzAuth;
+//     res.sendFile(path.join(__dirname, ''))
+// });
 
-//viewed at http://localhost:8080
-app.get('/',function(req,res){
-	res.sendFile(path.join(__dirname, 'register.html'))
-});
+// app.get('/hompage',function(req,res){
+//     console.log(req.cookies.jazzAuth);
+//     //rCookie = req.cookies.jazzAuth;
+//     res.sendFile(path.join(__dirname, 'index.html'))
+// });
+//
+//
+// //viewed at http://localhost:8080
+// app.get('/',function(req,res){
+// 	res.sendFile(path.join(__dirname, 'register.html'))
+// });
 
 const PORT = process.env.PORT || 8080;
 
-app.listen(PORT);
+app.listen(PORT, () => console.log(`Listening on port ${PORT}`));

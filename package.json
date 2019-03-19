@@ -5,7 +5,7 @@
   "main": "server.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "node server.js"
+    "start": "nodemon server.js"
   },
   "repository": {
     "type": "git",
@@ -18,15 +18,18 @@
   },
   "homepage": "https://github.com/jasmeetnarang/webdeb-todoList#readme",
   "dependencies": {
+    "body-parser": "latest",
+    "cookie-parser": "latest",
     "cross-fetch": "^3.0.1",
     "express": "^4.16.4",
     "jquery": "^3.3.1",
     "jsdom": "^13.2.0",
+    "morgan": "^1.9.1",
     "node-fetch": "^2.3.0",
+    "nodemon": "^1.18.10",
+    "react-strike": "^1.0.5",
     "request": "^2.88.0",
-    "set-cookie-parser": "^2.3.5",
-    "cookie-parser": "latest",
-    "body-parser": "latest"
+    "set-cookie-parser": "^2.3.5"
   },
   "engines": {
     "node": "10.x"

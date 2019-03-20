@@ -10,14 +10,14 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/jasmeetnarang/webdeb-todoList.git"
+    "url": "git+https://github.com/jasmeetnarang/webtodo-hw2.git"
   },
   "author": "",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/jasmeetnarang/webdeb-todoList/issues"
+    "url": "https://github.com/jasmeetnarang/webtodo-hw2/issues"
   },
-  "homepage": "https://github.com/jasmeetnarang/webdeb-todoList#readme",
+  "homepage": "https://github.com/jasmeetnarang/webtodo-hw2#readme",
   "dependencies": {
     "body-parser": "latest",
     "cookie-parser": "latest",

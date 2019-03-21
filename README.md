@@ -17,5 +17,8 @@ webdev-todoList
 4. Start Node Server
  
         nodemon sever.js
+4. Start React Server
+ 
+        npm start
        
-5. Browse to http://localhost:8080 or see live at 
+6. Browse to http://localhost:8080 or see live at https://todohw2.herokuapp.com/

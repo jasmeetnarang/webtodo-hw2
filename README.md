@@ -21,4 +21,4 @@ webdev-todoList
  
         npm start
        
-6. Browse to http://localhost:8080 or see live at https://todohw2.herokuapp.com/
+6. See live at https://todohw2.herokuapp.com/
